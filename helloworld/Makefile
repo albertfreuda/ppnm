@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =
+CFLAGS = -O -std=gnu11
 LDLIBS = -lm
 
 
