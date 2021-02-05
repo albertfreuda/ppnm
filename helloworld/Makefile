@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -0 -std=gnull -march=native
+CFLAGS =
 LDLIBS = -lm
 
 
