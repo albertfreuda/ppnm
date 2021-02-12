@@ -9,7 +9,13 @@ my min int (for) = -2147483648
 Now we examine the machine epsilon:
 machine eps (double and while)=2.22045e-16
 machine eps =2.22045e-16
-machine eps (float and while)=0.000000
+machine eps (float and while)=1.19209e-07
 machine eps =1.19209e-07
 machine eps (long double and while)=1.0842e-19
 machine eps =1.0842e-19
+
+Now we calculate some sums
+Limit of harmonic series (float) = 15.403683
+Limit of harmonic series (float) = 18.807919
+Limit of harmonic series (double) = 21.3716
+Limit of harmonic series (double) = 21.3716
