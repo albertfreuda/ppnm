@@ -1,0 +1,10 @@
+Gamma function of 5 is: 24
+Bessel function of 0.5 is: 0.242268
+Sqrt(-2) is: 0 + 1.41421 i
+e^(i*pi) is: -1 + 1.22465e-16 i
+e^(i) is: 0.540302 + 0.841471 i
+i^e is: -0.42822 + -0.903675 i
+i^i is: 0.20788 + 0 i
+float is: 0.1111111119389533996582031
+double is: 0.1111111111111111049432054
+long_double is: 0.1111111111111111111096053
