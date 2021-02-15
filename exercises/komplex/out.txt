@@ -1,0 +1,5 @@
+Here we test the functions in komplex.
+a= (1,2)
+b= (3,4)
+a+b should equal  (4,6)
+when in fact they equal (4,6)

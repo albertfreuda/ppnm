@@ -6,6 +6,7 @@ my min int = -2147483648
 compare with limits.h: -2147483648
 my min int (do while) = -2147483648
 my min int (for) = -2147483648
+
 Now we examine the machine epsilon:
 machine eps (double and while)=2.22045e-16
 machine eps =2.22045e-16
@@ -19,3 +20,6 @@ Limit of harmonic series (float) = 15.403683
 Limit of harmonic series (float) = 18.807919
 Limit of harmonic series (double) = 21.3716
 Limit of harmonic series (double) = 21.3716
+
+Now comes part 3. 
+When a=1 and b=1.1 (and tau = 0.05, epsilon=0.1) my function equal returns 1.

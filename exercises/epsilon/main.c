@@ -3,14 +3,7 @@
 #include<float.h>
 #include<math.h>
 
-int equal(double a, double b, double tau, dobule epsilon){
-	if (fabs(a-b) < tau)
-		return 1;
-	else if (fabs(a-b)/(fabs(a) + fabs(b)) < epsilon/2)
-		return 1;
-	else
-		return 0;
-}
+int equal(double a, double b, double tau, double epsilon);
 
 int main(){
 	int i=1; while(i+1>1) {i++;}
@@ -80,7 +73,15 @@ int main(){
 	printf("Limit of harmonic series (double) = %g\n",sum_down_double);
 	// These two agree better due to higher precision.
 	
-	printf(\n"Now comes part 3. \n");
+	printf("\nNow comes part 3. \n");
 
+	double a = 1.0;
+	double b = 1.1;
+
+	double epsilon = 0.1;
+	double tau = 0.05;
+
+	int t = equal(a,b,tau,epsilon);
+	printf("When a=1 and b=1.1 (and tau = 0.05, epsilon=0.1) my function equal returns %i.\n",t);
 return 0;
 }
