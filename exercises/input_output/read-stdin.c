@@ -5,7 +5,7 @@ int main() {
 	int items;
 	do{
 		items=scanf("%lg",&x);
-		printf("x=%g & sin(x) = %g\n",x,sin(x));
+		printf("x=%g & sin(x) = %g & cos(x)=%g\n",x,sin(x),cos(x));
 	}while(items!=EOF);
 return 0;
 }
