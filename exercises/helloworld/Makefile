@@ -17,7 +17,7 @@ hello: hello.o
 hello.o: hello.c
 	$(CC) $(CFLAGS) -c hello.c
 
-
+.PHONEY: clean
 clean: 
 	$(RM) -f hello.o hello out.txt
 

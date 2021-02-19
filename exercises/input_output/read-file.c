@@ -12,8 +12,9 @@ int main (int argc, char *argv[]){
 	int items;
 	do{
 		items=fscanf(my_input_stream,"%lg",&x);
+		if(items == EOF) break;
 		fprintf(my_output_stream,"x=%g, sin(x)=%g, cos(x)=%g\n",x,sin(x),cos(x));
-	}while(items!=EOF);
+	}while(1);
 	
 	fclose(my_input_stream);
 	fclose(my_output_stream);

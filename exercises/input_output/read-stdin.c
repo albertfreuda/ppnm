@@ -5,7 +5,8 @@ int main() {
 	int items;
 	do{
 		items=scanf("%lg",&x);
+		if (items == EOF) break;
 		printf("x=%g & sin(x) = %g & cos(x)=%g\n",x,sin(x),cos(x));
-	}while(items!=EOF);
+	}while(1);
 return 0;
 }
