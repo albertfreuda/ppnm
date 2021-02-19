@@ -5,9 +5,9 @@
 double Gamma(double);
 
 int main(){
-	double xmin = -5.1, xmax = 5;
+	double xmin = 0.1, xmax = 5;
 	for(double x=xmin;x<=xmax;x+=1.0/8){
-		printf("%10g %10g %10g %10g\n",x,tgamma(x),gsl_sf_gamma(x),Gamma(x));
+		printf("%10g %10g %10g %10g\n",x,gamma(x),gsl_sf_lngamma(x),log(Gamma(x)));
 		}
 return 0;
 }
