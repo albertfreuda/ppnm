@@ -67,7 +67,7 @@ mainB: mainB.o Gamma.o
 
 .PHONEY:clean
 clean: 
-	$(RM) out* main data2.txt data.txt *.o *.pn *.png main2
+	$(RM) mainB out* main data2.txt data.txt *.o *.pn *.png main2
 
 test:
 	echo $(CFLAGS)
