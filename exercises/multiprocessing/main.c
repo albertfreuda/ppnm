@@ -20,8 +20,8 @@ int main(int argc, char** argv){ // Optional number of points as argument
 	int N = (int)1e2; // Default number of points
 	if(argc>1) N=(int)atof(argv[1]); // Define number of points from opt. arg.
 	struct params p1 = {.seed = 1,.N=N/3,.N_in=0};
-	struct params p2 = {.seed = 2,.N=N/3,.N_in=0};
-	struct params p3 = {.seed = 3,.N=N/3,.N_in=0};
+	struct params p2 = {.seed = 13,.N=N/3,.N_in=0};
+	struct params p3 = {.seed = 42,.N=N/3,.N_in=0};
 	pthread_t t1,t2;
 	pthread_create(&t1,NULL,count,(void*)&p1);
 	pthread_create(&t2,NULL,count,(void*)&p2);
