@@ -3,8 +3,8 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS += $(shell gsl-config --libs)
 
 .PHONEY: default
-default: 
+default: main
 
 .PHONEY:clean
 clean:
-	$(RM) out*
+	$(RM) out* main
