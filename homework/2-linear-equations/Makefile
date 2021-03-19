@@ -25,7 +25,7 @@ timing.png:out.time.txt
 
 out.time.txt:QRtime Makefile
 	cat /dev/null > $@
-	for n in $$(seq 500 50 1000); do \time --format "%U" --append --output $@ ./$< $$n; done
+	for n in $$(seq 500 50 1000); do \time --format "$$n %U" --append --output $@ ./$< $$n; done
 
 out.txt: main
 	./$< > $@
