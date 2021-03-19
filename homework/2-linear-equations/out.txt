@@ -1,0 +1,63 @@
+This is the matrix A which we are trying to decompose:
+     84.0188      39.4383      78.3099 
+      79.844      91.1647      19.7551 
+     33.5223       76.823      27.7775 
+
+After decomposition we have the matrix Q:
+    0.696348    -0.588581     0.410697 
+    0.661747     0.305021    -0.684874 
+    0.277833     0.748688     0.601893 
+
+and the matrix R:
+     120.656      109.135      75.3213 
+           0       62.111     -19.2693 
+           0            0       35.351 
+
+R is definately upper triangular. 
+
+We can test our decomposition by computing Q^T*Q which should be the identity:
+           1            0            0 
+           0            1            0 
+           0            0            1 
+
+We might also want to know if QR = A:
+     84.0188      39.4383      78.3099 
+      79.844      91.1647      19.7551 
+     33.5223       76.823      27.7775 
+
+We conclude that our algorithm works.
+
+Now we solve a system of linear equations. The right hand side is:
+55.397
+47.7397
+62.8871
+
+To solve it we use our function GS_solve:
+
+The solution is:
+-0.410866
+0.712443
+0.789427
+
+To test our solution we calculate Ax=b:
+55.397
+47.7397
+62.8871
+
+It seems that our solution works!
+
+Part B:
+Find the the inverse of A.
+  0.00383008    0.0185733   -0.0240069 
+ -0.00587199  -0.00109956    0.0173363 
+   0.0116177   -0.0193736    0.0170262 
+
+To check that we are right, we compute AB=I
+           1            0            0 
+           0            1            0 
+           0            0            1 
+
+and BA=I
+           1            0            0 
+           0            1            0 
+           0            0            1 

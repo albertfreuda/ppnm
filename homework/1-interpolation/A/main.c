@@ -11,7 +11,9 @@ int main(){
 	for(int i=0;i<n;i++){
 		x[i] = i;y[i] = i*i;
 	}
-
+	//Print out data
+	for(int i=0;i<n;i++){printf("%g %g\n",x[i],y[i]);}
+	printf("\n\n");
 	//Make gsl interpolation to compare
 	gsl_interp* linear = gsl_interp_alloc(gsl_interp_linear,n); //Allocate
 	gsl_interp_init(linear,x,y,n); //Build

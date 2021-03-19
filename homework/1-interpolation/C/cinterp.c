@@ -16,7 +16,7 @@ cspline* cspline_alloc(int n, double *x, double *y){
 	//First we allocate memory corresponding to a spline struct:
 	cspline *s = (cspline*)malloc(sizeof(cspline));
 	//Then we allocate memory for all the parts of the struct:
-	s->b = (double*)malloc((n-1)*sizeof(double));//Coefficients
+	s->b = (double*)malloc((n)*sizeof(double));//Coefficients
 	s->c = (double*)malloc((n-1)*sizeof(double));
 	s->d = (double*)malloc((n-1)*sizeof(double));
 	s->x = (double*)malloc(n*sizeof(double));//Data
