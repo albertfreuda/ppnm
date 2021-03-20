@@ -5,10 +5,9 @@
 #include <assert.h>
 
 
+void print_matrix(gsl_matrix* A);
 
-void print_vector(gsl_vector* x){
-	for(int i=0;i<x->size;i++) printf("%g\n",gsl_vector_get(x,i));
-}
+void vector_print(gsl_vector* x);
 
 void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 	//Pull out the size of A:
@@ -31,7 +30,7 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 			if(norm_ai>1e-15){
 			gsl_matrix_set(A,j,i,a_ji/norm_ai);}
 			else {gsl_matrix_set(A,j,i,0);
-				printf("Your matrix is singular!\n");
+			//	printf("Your matrix is singular!\n");
 			}
 		}
 		//Orthogonalize all remaining vectors:
