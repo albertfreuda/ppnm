@@ -1,0 +1,93 @@
+Welcome to my eigen value decomposition homework.
+Our matrix A:
+     84.0188      39.4383      78.3099 
+     39.4383       79.844      91.1647 
+     78.3099      91.1647      19.7551 
+We multiply it by a Jacobi matrix with angle 0.1:
+     79.6618      30.8534      78.3099 
+     31.2702      75.5079      91.1647 
+     68.8174      82.8913      19.7551 
+We complete the Jacobi transformation:
+     82.3856      38.2375        87.02 
+      23.161      72.0504      82.8913 
+     68.8174      82.8913      19.7551 
+Now we make A diagonal:
+01 and theta = 0.852564
+02 and theta = -1.38444
+12 and theta = 1.22337
+01 and theta = 1.54009
+02 and theta = -0.571736
+12 and theta = 0.0850337
+01 and theta = -0.248314
+02 and theta = -0.420925
+12 and theta = 0.269328
+01 and theta = -0.429334
+02 and theta = -0.208462
+12 and theta = 0.317933
+01 and theta = -0.367047
+02 and theta = -0.096481
+12 and theta = -0.482455
+01 and theta = -0.32367
+02 and theta = -0.113937
+12 and theta = 0.913242
+01 and theta = -0.163424
+02 and theta = 0.527707
+12 and theta = -1.06117
+01 and theta = 0.738639
+02 and theta = 0.248335
+12 and theta = -0.286787
+01 and theta = 0.589187
+02 and theta = 0.371013
+12 and theta = 0.679502
+01 and theta = 0.181841
+02 and theta = 0.071978
+12 and theta = 0.371214
+01 and theta = 0.337152
+02 and theta = -0.0372662
+12 and theta = 0.636995
+01 and theta = 0.622622
+02 and theta = -0.405874
+12 and theta = 0.640929
+01 and theta = 0.616139
+02 and theta = -0.481053
+12 and theta = -0.732204
+01 and theta = 0.00748865
+02 and theta = -0.110297
+12 and theta = 0.0167134
+01 and theta = 0.0189798
+02 and theta = -0.179869
+12 and theta = -0.0271245
+01 and theta = 0.0269061
+02 and theta = -0.234606
+12 and theta = -0.0202561
+01 and theta = 0.0401736
+02 and theta = -0.221877
+12 and theta = -0.0166718
+01 and theta = 0.0643787
+02 and theta = -0.130291
+12 and theta = -0.0109255
+01 and theta = 0.120896
+02 and theta = -0.0312753
+12 and theta = -0.00400592
+01 and theta = 0.172803
+02 and theta = -0.00140405
+12 and theta = -0.000206848
+01 and theta = 0.020393
+02 and theta = -2.92666e-06
+12 and theta = 2.44193e-06
+01 and theta = 0.000137894
+02 and theta = -1.3538e-11
+12 and theta = -2.99777e-08
+01 and theta = 1.51678e-08
+02 and theta = -2.7776e-18
+12 and theta = 3.68095e-10
+01 and theta = 3.14863e-16
+02 and theta = -2.7776e-18
+12 and theta = 3.68095e-10
+-1.65192e-08            0            0 
+    -3.66084      4.26643  2.55796e-07 
+     927.827     -363.485      699.186 
+We check if V'V=I:
+     153.841     -153.139     -85.9639 
+    -153.139       152.44      85.5715 
+    -85.9639      85.5715      48.0374 
