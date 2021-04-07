@@ -32,16 +32,23 @@ void rkstep12(
 
 	int n=yt->size;
 	gsl_vector* k0 = gsl_vector_alloc(yt->size);
-	gsl_vector* k = gsl_vector_alloc(yt->size);
+	gsl_vector* k  = gsl_vector_alloc(yt->size);
+	gsl_vector* ymid = gsl_vector_alloc(yt->size);
 
-	f(t,yt,k0);//Take step and evaluate. Store in k0
+	//Take step and evaluate. Store in k0
+	f(t,yt,k0);
+	
 	//Use k0 to take half-step:
-	for(int i=0;i<n;i++) gsl_vector_set(k,i,gsl_vector_get(yt,i)+0.5*h*gsl_vector_get(k0,i));
-	f(t+0.5*h,k,yh);	//Use estimate to evaluate at midpoint. Save to yh
-	for(int i=0;i<n;i++) gsl_vector_set(yh,i,gsl_vector_get(yt,i)+h*gsl_vector_get(yh,i));
+	for(int i=0;i<n;i++){
+	gsl_vector_set(ymid,i,gsl_vector_get(yt,i)+0.5*h*gsl_vector_get(k0,i));
+	}
+	
+	f(t+0.5*h,ymid,k);//Use estimate to evaluate at midpoint. Save to k
+	for(int i=0;i<n;i++) gsl_vector_set(yh,i,gsl_vector_get(yt,i)+h*gsl_vector_get(k,i));
 	for(int i=0;i<n;i++) gsl_vector_set(err,i,(gsl_vector_get(k0,i)-gsl_vector_get(k,i))/2);
 	gsl_vector_free(k0);
 	gsl_vector_free(k);
+	gsl_vector_free(ymid);
 }
 
 void driver(void f(double t, gsl_vector* y,gsl_vector* dydt),
