@@ -3,7 +3,18 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS += $(shell gsl-config --libs)
 
 .PHONEY:default
-default: out.SIR.png out.harm_osc.png 
+default: out.threebody.png out.SIR.png out.harm_osc.png 
+
+out.threebody.png: out.txt Makefile	
+	echo '\
+	set terminal png;\
+	set output "$@";\
+	set title "Stable solution to the 3-body problem";\
+	plot \
+	"$<" index 2 using 2:4 with points title "Body 1"\
+	,"$<" index 2 using 6:8 with points title "Body 2"\
+	,"$<" index 2 using 10:12 with points title "Body 3"\
+	'| pyxplot
 
 out.SIR.png: out.txt Makefile	
 	echo '\
