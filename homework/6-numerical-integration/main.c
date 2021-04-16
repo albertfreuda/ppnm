@@ -22,13 +22,15 @@ int main(){
 	int n_evals;
 	double Q;
 	Q = integral(h,0,1,abstol,reltol,&n_evals);
-	printf("Part of exercise: Comparison between number of evaluations\n");
+	printf("1st part of exercise B: Comparison between number of evaluations\n");
 printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
 	Q = clenshaw_curtis(h,0,1,abstol,reltol,&n_evals);
 printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
-	
+	printf("We see that the Clenshaw-Curtis transformation reduces the number of evaluations.\n");
+	printf("To further investigate this, see figure out.evaluations.png\n");
 	int calls;
-	//Change index for plotting INDEX 1
+	//Change index for plotting INDEX 1.
+	printf("Now comes some data for plotting the figure mentioned above\n");
 	printf("\n\n");
 	//Nested function (only gcc supports this, outside base c)
 	double pi_fun(double x){calls++;return 4*sqrt(1-x*x);}
@@ -72,7 +74,9 @@ gsl_integration_qags(&pi_gsl,0,1,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
 	}
 	printf("\n\n");//index for pyxplot INDEX 4
 	printf("%.25g %.25g %.25g\n",Q,Q_CC,Q_gsl);
-	printf("\n\nNote that this routine gives wrong error estimates!\n");//index for pyxplot INDEX 5
+	printf("\n\n");//index for pyxplot INDEX 5
+
+	printf("C: Testing integrals with infinite limits (and the error estimates)\n");
 
 	calls = 0;	
 	abstol = 0.01;

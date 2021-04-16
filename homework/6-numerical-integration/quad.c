@@ -76,8 +76,12 @@ double quadC(double f(double),
 	double tol = abstol + reltol*fabs(Q);
 	if(*err<tol) return Q;
 	else{
-	return quadC(f,a,(a+b)/2,f1,f2,abstol/sqrt(2),reltol,nrec+1,err)
-	     + quadC(f,(a+b)/2,b,f4,f5,abstol/sqrt(2),reltol,nrec+1,err);
+		double err1,err2;
+
+	double Q1 = quadC(f,a,(a+b)/2,f1,f2,abstol/sqrt(2),reltol,nrec+1,&err1);
+	double Q2 = quadC(f,(a+b)/2,b,f4,f5,abstol/sqrt(2),reltol,nrec+1,&err2);
+	*err = sqrt(err1*err1+err2*err2);
+	return Q1+Q2;
 	}
 }
 

@@ -1,6 +1,9 @@
-Part of exercise: Comparison between number of evaluations
+1st part of exercise B: Comparison between number of evaluations
 Integral on (0,1) of 1/sqrt(x)=1.99952 and integrand was evaluated 4292 times
 Integral on (0,1) of 1/sqrt(x)=1.99987 and integrand was evaluated 8 times
+We see that the Clenshaw-Curtis transformation reduces the number of evaluations.
+To further investigate this, see figure out.evaluations.png
+Now comes some data for plotting the figure mentioned above
 
 
 0.01 12
@@ -44,10 +47,10 @@ Integral on (0,1) of 1/sqrt(x)=1.99987 and integrand was evaluated 8 times
 3.141592653589793115997963 3.141592653589793115997963 3.141592653589792671908754
 
 
-Note that this routine gives wrong error estimates!
+C: Testing integrals with infinite limits (and the error estimates)
 Integral of 1/x^2 from 1 to infinity          = 1 +- 1.11022e-16 (4 evals)
 Integral of 1/x^2 from 1 to infinity (gsl)    = 1 +- 1.11022e-14 (15 evals)
-Integral of gaussian from -inf to inf         = 1.7677 +- 0.00248419 (24 evals)
+Integral of gaussian from -inf to inf         = 1.7677 +- 0.00976843 (24 evals)
 Integral of gaussian from -inf to inf (gsl)   = 1.77245 +- 4.31636e-06 (150 evals)
-Integral of exp(1/x)/x^2 from -inf to 0       = 0.991708 +- 0.00157417 (8 evals)
+Integral of exp(1/x)/x^2 from -inf to 0       = 0.991708 +- 0.00174999 (8 evals)
 Integral of exp(1/x)/x^2 from -inf to 0 (gsl) = 1 +- 0.00353216 (45 evals)
