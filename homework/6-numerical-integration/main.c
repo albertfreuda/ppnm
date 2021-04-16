@@ -2,7 +2,7 @@
 #include"quad_declarations.h"
 #include<math.h>
 #include<stdio.h>
-#include<time.h>
+#include<gsl/gsl_integration.h>
 
 
 double f(double x){
@@ -26,29 +26,89 @@ int main(){
 printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
 	Q = clenshaw_curtis(h,0,1,abstol,reltol,&n_evals);
 printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
-
-	//Change index for plotting
-	printf("\n\nThe PI approximations.\n");
-printf("Tolerance : Value of integral : Time : # of evaluations : Value CC : Time CC : # CC\n");	
-	int n_evals_CC;
-	abstol =1e-10; 	
-	clock_t begin = clock();
-	Q = integral(g,0,1,abstol,0,&n_evals);
-	clock_t end = clock();
-	double time = (double)(end-begin)/CLOCKS_PER_SEC;
 	
-	begin = clock();
-	double Q_CC = clenshaw_curtis(g,0,1,abstol,0,&n_evals_CC);
-	end = clock();
-	double time_CC = (double)(end-begin)/CLOCKS_PER_SEC;
-	printf("Evaluating PI integral without ClenshawCurtis:\n");
-	printf("               Q = %.20g\n",Q);	
-	printf("            Time = %g seconds\n",time);	
-	printf("# of evaluations = %i\n\n",n_evals);	
-	printf("Evaluating PI integral with ClenshawCurtis:\n");
-	printf("               Q = %.20g\n",Q_CC);	
-	printf("            Time = %g seconds\n",time_CC);	
-	printf("# of evaluations = %i\n\n",n_evals_CC);	
+	int calls;
+	//Change index for plotting INDEX 1
+	printf("\n\n");
+	//Nested function (only gcc supports this, outside base c)
+	double pi_fun(double x){calls++;return 4*sqrt(1-x*x);}
+	
+	reltol = 0;//Focus on abstol
+	double Q_CC;
 
+	//First we calculate #of evaluations for standard integral function:
+	for(int i = 0; i<10; i++){
+		calls = 0;
+		Q = integral(pi_fun,0,1,abstol,reltol,&n_evals);
+		printf("%g %i\n",abstol,calls);
+		abstol/=10;
+	}
+	printf("\n\n");//Change index for pyxplot INDEX 2
+	//Then we use Clenshaw Curtis integration routine:
+	abstol = 0.01;
+	for(int i = 0; i<10; i++){
+		calls = 0;
+		Q_CC = clenshaw_curtis(pi_fun,0,1,abstol,reltol,&n_evals);
+		printf("%g %i\n",abstol,calls);
+		abstol/=10;
+	}
+	printf("\n\n");//Change index for pyxplot INDEX 3
+	//Now we use GSL:	
+	abstol = 0.01;
+
+int size = 100000;
+double pi_fun2(double x,void * params){calls++;return 4*sqrt(1-x*x);}
+gsl_integration_workspace* workspace = gsl_integration_workspace_alloc(size);
+gsl_function pi_gsl;
+pi_gsl.function = &pi_fun2;
+double Q_gsl;
+double err_gsl;
+
+	for(int i = 0; i<12; i++){
+		calls = 0;
+gsl_integration_qags(&pi_gsl,0,1,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
+		printf("%g %i\n",abstol,calls);
+		abstol/=10;
+	}
+	printf("\n\n");//index for pyxplot INDEX 4
+	printf("%.25g %.25g %.25g\n",Q,Q_CC,Q_gsl);
+	printf("\n\nNote that this routine gives wrong error estimates!\n");//index for pyxplot INDEX 5
+
+	calls = 0;	
+	abstol = 0.01;
+	reltol = 0.01;
+	double b = INFINITY;
+	double b_inf(double x){calls++;return 1.0/(x*x);}
+	double err;
+	Q = integralC(b_inf,1,b,abstol,reltol,&err);	
+	printf("Integral of 1/x^2 from 1 to infinity          = %g +- %g (%i evals)\n",Q,err,calls);
+
+	calls = 0;
+	double b_inf2(double x,void* param){calls++;return 1.0/(x*x);}
+	pi_gsl.function = &b_inf2;
+	gsl_integration_qagiu(&pi_gsl,1,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
+	printf("Integral of 1/x^2 from 1 to infinity (gsl)    = %g +- %g (%i evals)\n",Q_gsl,err_gsl,calls);
+
+	calls = 0;
+	double gaussian(double x){calls++;return exp(-x*x);}
+	Q = integralC(gaussian,-INFINITY,INFINITY,abstol,reltol,&err);
+	printf("Integral of gaussian from -inf to inf         = %g +- %g (%i evals)\n",Q,err,calls);
+
+	calls = 0;
+	double gaussian2(double x,void* param){calls++;return exp(-x*x);}
+	pi_gsl.function = &gaussian2;
+	gsl_integration_qagi(&pi_gsl,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
+	printf("Integral of gaussian from -inf to inf (gsl)   = %g +- %g (%i evals)\n",Q_gsl,err_gsl,calls);
+	
+	calls = 0;
+	double a_inf(double x){calls++;return exp(1.0/x)/x/x;}
+	Q = integralC(a_inf,-INFINITY,0,abstol,reltol,&err);
+	printf("Integral of exp(1/x)/x^2 from -inf to 0       = %g +- %g (%i evals)\n",Q,err,calls);
+
+	calls = 0;
+	double a_inf2(double x,void* param){calls++;return exp(1.0/x)/x/x;}
+	pi_gsl.function = &a_inf2;
+	gsl_integration_qagil(&pi_gsl,0,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
+	printf("Integral of exp(1/x)/x^2 from -inf to 0 (gsl) = %g +- %g (%i evals)\n",Q_gsl,err_gsl,calls);
 return 0;
 }

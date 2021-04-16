@@ -1,2 +1,53 @@
-The integral of 1/sqrt(x) from 0 to 1 is: 1.99952 and f was evaluated 4292 times
-The integral of 1/sqrt(x) from 0 to 1 is: 1.99987 and f was evaluated 8 times
+Part of exercise: Comparison between number of evaluations
+Integral on (0,1) of 1/sqrt(x)=1.99952 and integrand was evaluated 4292 times
+Integral on (0,1) of 1/sqrt(x)=1.99987 and integrand was evaluated 8 times
+
+
+0.01 12
+0.001 40
+0.0001 100
+1e-05 244
+1e-06 636
+1e-07 1620
+1e-08 3876
+1e-09 9968
+1e-10 25892
+1e-11 61596
+
+
+0.01 24
+0.001 56
+0.0001 128
+1e-05 384
+1e-06 888
+1e-07 1976
+1e-08 6232
+1e-09 14152
+1e-10 30632
+1e-11 99000
+
+
+0.01 105
+0.001 189
+0.0001 231
+1e-05 231
+1e-06 231
+1e-07 231
+1e-08 231
+1e-09 231
+1e-10 273
+1e-11 315
+1e-12 315
+1e-13 315
+
+
+3.141592653589793115997963 3.141592653589793115997963 3.141592653589792671908754
+
+
+Note that this routine gives wrong error estimates!
+Integral of 1/x^2 from 1 to infinity          = 1 +- 1.11022e-16 (4 evals)
+Integral of 1/x^2 from 1 to infinity (gsl)    = 1 +- 1.11022e-14 (15 evals)
+Integral of gaussian from -inf to inf         = 1.7677 +- 0.00248419 (24 evals)
+Integral of gaussian from -inf to inf (gsl)   = 1.77245 +- 4.31636e-06 (150 evals)
+Integral of exp(1/x)/x^2 from -inf to 0       = 0.991708 +- 0.00157417 (8 evals)
+Integral of exp(1/x)/x^2 from -inf to 0 (gsl) = 1 +- 0.00353216 (45 evals)
