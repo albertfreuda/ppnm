@@ -1,0 +1,6 @@
+Search for Rosenbrock valley extrema started at x=-2 and y=8
+Extremum for the Rosenbrock valley at:
+0.999928
+0.999836
+after calling the function 3434 times.
+The minimum energy of s-wave was found to be -1
