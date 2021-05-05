@@ -47,16 +47,49 @@ void hydrogen(gsl_vector* x,gsl_vector* M){
 	gsl_vector * ya  = gsl_vector_alloc(2);
 	gsl_vector * yb  = gsl_vector_alloc(2);
 	gsl_vector * err = gsl_vector_alloc(2);
+	
+	//Since the ODE diverges for r=0, choose small r for initial condition instead:
+	double rmin = 1e-3;
+	//But what are the initial conditions in this place? We calculate using limiting case:
+	double Fmin = rmin - rmin*rmin;
+	double Fminprime = 1-2*rmin;
 
-	gsl_vector_set(ya,0,1);
-	gsl_vector_set(ya,1,0);
+	gsl_vector_set(ya,0,Fmin);
+	gsl_vector_set(ya,1,Fminprime);
 
 	double h=0.1,acc = 0.01, eps = 0.01;
-	printf("You now start integrating the Schrodinger eq.");
-	driver(schrodinger,0.1,ya,rmax,yb,err,h,acc,eps,epsilon);
+	driver(schrodinger,rmin,ya,rmax,yb,err,h,acc,eps,epsilon);
 	gsl_vector_set(M,0,gsl_vector_get(yb,0));
-	printf("The value at rmax is: %g\n",gsl_vector_get(M,0));
 }
+
+void hydrogen2(gsl_vector* x,gsl_vector* M){
+	ncalls++;
+	//Where do we evaluate the wavefunction?
+	double rmax = 5;
+	
+	//This will be the guess for the energy
+	double epsilon = gsl_vector_get(x,0);
+
+	
+	gsl_vector * ya  = gsl_vector_alloc(2);
+	gsl_vector * yb  = gsl_vector_alloc(2);
+	gsl_vector * err = gsl_vector_alloc(2);
+	
+	//Since the ODE diverges for r=0, choose small r for initial condition instead:
+	double rmin = 1e-3;
+	//But what are the initial conditions in this place? We calculate using limiting case:
+	double Fmin = rmin - rmin*rmin;
+	double Fminprime = 1-2*rmin;
+
+	gsl_vector_set(ya,0,Fmin);
+	gsl_vector_set(ya,1,Fminprime);
+
+	double h=0.1,acc = 0.01, eps = 0.01;
+	double k = sqrt(-2*epsilon);
+	driver(schrodinger,rmin,ya,rmax,yb,err,h,acc,eps,epsilon);
+	gsl_vector_set(M,0,gsl_vector_get(yb,0)-rmax*exp(-k*rmax));
+}
+
 
 void harm_osc(double t,gsl_vector* y, gsl_vector* dydt,double param){
 	//Harmonic oscillator
@@ -68,6 +101,8 @@ void harm_osc(double t,gsl_vector* y, gsl_vector* dydt,double param){
 int main(){
 	gsl_vector * x = gsl_vector_alloc(2);
 	double acc = .01;
+
+	printf("Welcome to Root Finding!\n\nThis is part A:\n\n");
 
 	double x0 = -2;
 	double y0 =  8;
@@ -84,37 +119,42 @@ int main(){
 	}
 	printf("after calling the function %i times.\n",ncalls);
 
+	printf("\nNow comes part B\n\n");
 	gsl_vector * y = gsl_vector_alloc(1);
-	gsl_vector_set(y,0,-1);
+	gsl_vector_set(y,0,-2);
 
 	ncalls = 0;
+
+	printf("Search for energy minimum started at epsilon = %g\n",gsl_vector_get(y,0));
+	newton(hydrogen,y,acc);
+	
+	printf("Energy of s-wave is: %g\n",gsl_vector_get(y,0));
+	printf("after calling the function %i times.\n",ncalls);
+
+	//We also need to plot the resulting wave function, so we solve SE again
+	double rmax = 5;
+	double epsilon = gsl_vector_get(y,0);
 	gsl_vector * ya  = gsl_vector_alloc(2);
 	gsl_vector * yb  = gsl_vector_alloc(2);
 	gsl_vector * err = gsl_vector_alloc(2);
-	//IVP
-	gsl_vector_set(ya,0,1);
-	gsl_vector_set(ya,1,0);
+	double rmin = 1e-3;
+	double Fmin = rmin - rmin*rmin;
+	double Fminprime = 1-2*rmin;
+	gsl_vector_set(ya,0,Fmin);
+	gsl_vector_set(ya,1,Fminprime);
+	double h=0.1,acc = 0.01, eps = 0.01;
+	driver2(schrodinger,rmin,ya,rmax,yb,err,h,acc,eps,epsilon);
+	
+	printf("\nNow comes part C\n\n");
 
-	double eps=0.01;
-
-	//To test the ODE we solve HO:
-	//driver(harm_osc,0,ya,3*M_PI/2,yb,err,.1,acc,eps,1);
-	//printf("After 2-periods the HO has value %g\n",gsl_vector_get(yb,0));
-	//The ODE-solver seems to work perfectly fine. 
+	gsl_vector_set(y,0,-2);
+	ncalls = 0;
+	printf("Search for energy minimum started at epsilon = %g\n",gsl_vector_get(y,0));
+	newton(hydrogen2,y,acc);
 	
-	gsl_vector_set(ya,0,1);
-	gsl_vector_set(ya,1,0);
-	
-	//driver(schrodinger,0.1,ya,8,yb,err,0.1,acc,eps,-0.5);
-	newton(hydrogen,y,acc);
-	
-printf("Search for energy minimum started at epsilon = -1\n");
-	printf("Energy of s-wave at: %g\n",gsl_vector_get(y,0));
+	printf("Energy of s-wave is: %g\n",gsl_vector_get(y,0));
 	printf("after calling the function %i times.\n",ncalls);
-	//printf("ODE solution of SE at 8a0 =  %g\n",gsl_vector_get(yb,0));
 	
-//printf("The minimum energy of s-wave was found to be %g\n",gsl_vector_get(y,0));
-
 	gsl_vector_free(x);
 	gsl_vector_free(y);
 	return 0;

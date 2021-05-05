@@ -1,6 +1,21 @@
+Welcome to Root Finding!
+
+This is part A:
+
 Search for Rosenbrock valley extrema started at x=-2 and y=8
 Extremum for the Rosenbrock valley at:
 0.999928
 0.999836
 after calling the function 3434 times.
-The minimum energy of s-wave was found to be -1
+
+Now comes part B
+
+Search for energy minimum started at epsilon = -2
+Energy of s-wave is: -0.500066
+after calling the function 37 times.
+
+Now comes part C
+
+Search for energy minimum started at epsilon = -2
+Energy of s-wave is: -0.500244
+after calling the function 25 times.

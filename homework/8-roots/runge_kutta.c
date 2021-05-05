@@ -95,3 +95,49 @@ void driver(void f(double t, gsl_vector* y,gsl_vector* dydt,double param),
 		h *= 0.95*pow(tol/norm_err,0.25);
 	}
 }
+
+
+void driver2(void f(double t, gsl_vector* y,gsl_vector* dydt,double param),
+		double a,//t0
+		gsl_vector* ya, //y(a)
+		double b,//end point of integration
+		gsl_vector* yb, //y(b) to be calc
+		gsl_vector* err, //err memory location
+		double h,//initial step size
+		double acc,//abs acc. goal
+		double eps,
+		double param){//relative acc. goal
+	FILE* my_output_stream = fopen("out.s_wave.txt","w");		
+	//Calculate y(b)
+	double t = a;//Starting point
+	fprintf(my_output_stream,"%g ",t); //Print first t and initial condition y(a):
+	for(int i=0;i<ya->size;i++){
+		fprintf(my_output_stream,"%g ",gsl_vector_get(ya,i));
+	}	
+	fprintf(my_output_stream,"\n");
+	
+	while(t<b){//Check that we are still in the interval
+		if(t+h>b) h = b-t;//Don't step too far if we reach end point
+		//Take step:
+		rkstep12(f,t,ya,h,yb,err,param);
+		//New y(t+h) is stored in yb
+		//Check if tolerance is satisfied:
+		double norm_yb = gsl_blas_dnrm2(yb);
+		double norm_err = gsl_blas_dnrm2(err);
+		double tol = (eps*norm_yb+acc)*sqrt(h/(b-a));
+		//Check if norm_err<tol
+		if(norm_err<tol){ //If true accept step
+			t = t+h; //Progress time-step
+			gsl_vector_memcpy(ya,yb);//Save new step to current step
+			//Print out new point:
+			fprintf(my_output_stream,"%g ",t);
+			for(int i=0;i<ya->size;i++){
+				fprintf(my_output_stream,"%g ",gsl_vector_get(ya,i));
+			}	
+			printf(my_output_stream,"\n");
+		}
+		//Calculate new step-size h
+		h *= 0.95*pow(tol/norm_err,0.25);
+	}
+	fclose(my_output_stream);
+}
