@@ -12,10 +12,10 @@ out.higgs.png: out.txt Makefile
 	set output $@;\
 	set xlabel "$$E_{cm} [GeV]$$";\
 	set ylabel "$$\sigma$$";\
-	set key top right;\
+	set key outside;\
 	set title "Fit to CERN data on Higgs boson";\
 	plot \
-	"$<" index 1 using 1:2 with points title "Data"\
+	"$<" index 1 using 1:2:5 with yErrorBars title "Data"\
 	,"$<" index 1 using 1:3 with line title "Fit"\
 	,"$<" index 1 using 1:4 with line title "Initial parameter guess"\
 	' | pyxplot
@@ -23,7 +23,9 @@ out.higgs.png: out.txt Makefile
 out.txt: main
 	./$< > $@
 
-main: main.c newton_min.c
+main: main.c newton_min.c simplex.c
+
+simplex_test: simplex_test.c simplex.c
 
 .PHONEY:clean
 clean:

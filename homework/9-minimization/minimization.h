@@ -13,3 +13,7 @@ void ngradient(double F(gsl_vector * x),
 int qnewton(double F(gsl_vector * x), //function to minimize
 		gsl_vector * x,        //initial guess
 		double eps);            //tolerance
+
+void downhill_simplex(double f(gsl_vector * x),
+		gsl_matrix * simplex,
+		double tolerance);

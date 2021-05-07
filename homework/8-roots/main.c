@@ -2,6 +2,7 @@
 #include<math.h>
 #include<gsl/gsl_matrix.h>
 #include"rk_declarations.h"
+#include"linsolve_declarations.h"
 
 static int ncalls;
 
@@ -142,10 +143,11 @@ int main(){
 	double Fminprime = 1-2*rmin;
 	gsl_vector_set(ya,0,Fmin);
 	gsl_vector_set(ya,1,Fminprime);
-	double h=0.1,acc = 0.01, eps = 0.01;
+	double h=0.1, eps = 0.01;
 	driver2(schrodinger,rmin,ya,rmax,yb,err,h,acc,eps,epsilon);
 	
 	printf("\nNow comes part C\n\n");
+	printf("Because we use a better boundary condition,\nwe may use a smaller rmax.\n");
 
 	gsl_vector_set(y,0,-2);
 	ncalls = 0;

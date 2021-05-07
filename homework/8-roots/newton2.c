@@ -32,7 +32,6 @@ void newton(void f(gsl_vector* x,gsl_vector* fx),
 	//Make room for Jacobian
 	gsl_matrix * J = gsl_matrix_alloc(dim,dim);
 	gsl_matrix * Js = gsl_matrix_alloc(dim,dim);
-	gsl_matrix* R = gsl_matrix_alloc(dim,dim);
 	//Calculate f(x) and store in fx:
 	f(x,fx);
 	double normfx = gsl_blas_dnrm2(fx);
@@ -67,15 +66,16 @@ void newton(void f(gsl_vector* x,gsl_vector* fx),
 	
 	//Now we solve Jdelx = -f(x):
 	
+	
 	//Since we have created the Jacobian matrix fdx is no longer used.
 	//We now use it to store QR-decomposition in 
 	//Copy content of J to Js, so that we dont destroy J
 	gsl_matrix_memcpy(Js,J);
 	gsl_vector_scale(fx,-1);//Correct the sign of f(x)
 	//Decompose J<-QR and fdx<-tau
-	GS_decomp(Js,R);
+	gsl_linalg_QR_decomp(Js,fdx);
 	//Solve system Js*delx = -fx and store xp <- delx
-	GS_solve(Js,R,fx,xp);
+	gsl_linalg_QR_solve(Js,fdx,fx,xp);
 	
 	//Now we have delx stored in xp
 	double lambda = 1;
@@ -109,6 +109,5 @@ void newton(void f(gsl_vector* x,gsl_vector* fx),
 	gsl_vector_free(fdx);
 	gsl_vector_free(xpdx);
 	gsl_matrix_free(Js);
-	gsl_matrix_free(R);
 
 }

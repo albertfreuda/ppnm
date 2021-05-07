@@ -134,7 +134,7 @@ void driver2(void f(double t, gsl_vector* y,gsl_vector* dydt,double param),
 			for(int i=0;i<ya->size;i++){
 				fprintf(my_output_stream,"%g ",gsl_vector_get(ya,i));
 			}	
-			printf(my_output_stream,"\n");
+			fprintf(my_output_stream,"\n");
 		}
 		//Calculate new step-size h
 		h *= 0.95*pow(tol/norm_err,0.25);

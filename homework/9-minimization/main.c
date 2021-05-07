@@ -1,6 +1,17 @@
 #include"minimization.h"
 
 static int ncalls;
+
+void print_simplex(gsl_matrix * S){
+	int n=S->size1,m=n+1;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+		printf("%.5g ",gsl_matrix_get(S,i,j));
+		}
+		printf("\n");
+	}	
+}
+
 double F(gsl_vector * x){
 	ncalls++;
 	double s = gsl_vector_get(x,0);
@@ -90,6 +101,8 @@ int main(){
 	gsl_vector_set(params,1,4);
 	gsl_vector_set(params,2,20);
 
+	gsl_vector_memcpy(paramsc,params);
+
 	double deviation(gsl_vector * v){
 		double res=0;
 		for(int i=0;i<30;i++){
@@ -104,8 +117,25 @@ res+=(BreitWigner(v,Ecm[i])-sigma[i])*(BreitWigner(v,Ecm[i])-sigma[i])/err[i]/er
 	//Make index for pypxlot:
 	printf("\n\n");
 	for(int i=0;i<30;i++){
-	printf("%g %g %g %g\n",Ecm[i],sigma[i],BreitWigner(paramsc,Ecm[i]),BreitWigner(params,Ecm[i]));
+	printf("%g %g %g %g %g\n",Ecm[i],sigma[i],BreitWigner(paramsc,Ecm[i]),BreitWigner(params,Ecm[i]),err[i]);
 	}
+
+	printf("\n\nPart C:\n");	
+	printf("The simplex algorithm has been incorporated\nand will now be used on the 2D norm function:\n");
+	gsl_matrix * simplex = gsl_matrix_alloc(2,3);
+	gsl_matrix_set(simplex,0,0,1);
+	gsl_matrix_set(simplex,1,0,1);
+	gsl_matrix_set(simplex,0,1,0);
+	gsl_matrix_set(simplex,1,1,2);
+	gsl_matrix_set(simplex,0,2,2);
+	gsl_matrix_set(simplex,1,2,2);
+	
+	printf("The starting simplex is:\n");
+	print_simplex(simplex);
+	downhill_simplex(F,simplex,0.001);
+	printf("and the final simplex is:\n");
+	print_simplex(simplex);
+	printf("indicating that the minimum is at the null-vector.\n");
 
 	return 0;
 }

@@ -16,6 +16,8 @@ after calling the function 37 times.
 
 Now comes part C
 
+Because we use a better boundary condition,
+we may use a smaller rmax.
 Search for energy minimum started at epsilon = -2
 Energy of s-wave is: -0.500244
 after calling the function 25 times.
