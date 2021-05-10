@@ -29,4 +29,4 @@ simplex_test: simplex_test.c simplex.c
 
 .PHONEY:clean
 clean:
-	$(RM) main out*
+	$(RM) main out* simplex_test

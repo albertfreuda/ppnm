@@ -19,6 +19,7 @@ Value at min : 9.25003e-11
 
 Now comes part B of the exercise:
 HIGGS BOSON FIT
+             : mass width amplitude
 Initial guess: ( 126 4 20 )
 Found minimum: ( 126 2.42 11.6 )
 Steps        : 1000
@@ -56,3 +57,39 @@ Value at min : 26.8969
 155 -1.86 0.0137808 0.0236686 0.9
 157 1.76 0.0120643 0.0207254 0.9
 159 -0.5 0.0106495 0.0182983 0.9
+
+
+Part C:
+The simplex algorithm has been incorporated
+and will now be used on the 2D norm function:
+The starting simplex is:
+1 0 2 
+1 2 2 
+and the final simplex is:
+0.00066564 0 -8.9552e-05 
+-0.00072766 0 -0.00061846 
+indicating that the minimum is at
+0
+0
+
+The simplex algorithm will now be used on the Rosenbrock function:
+The starting simplex is:
+1 0 2 
+1 2 2 
+and the final simplex is:
+1 1 0.99963 
+1 1.0001 0.9993 
+indicating that the minimum is at
+1
+1
+
+The simplex algorithm will now be used on the Himmelblau function:
+The starting simplex is:
+1 0 2 
+1 2 2 
+and the final simplex is:
+2.9997 3.0002 3.0002 
+1.9999 2.0001 1.9996 
+indicating that the minimum is at
+3.00018
+2.00008

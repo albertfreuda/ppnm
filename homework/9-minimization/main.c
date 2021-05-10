@@ -2,6 +2,13 @@
 
 static int ncalls;
 
+void print_vector(gsl_vector * v){
+	int n = v->size;
+	for(int i=0;i<n;i++){
+		printf("%g\n",gsl_vector_get(v,i));
+	}
+}
+
 void print_simplex(gsl_matrix * S){
 	int n=S->size1,m=n+1;
 	for(int i=0;i<n;i++){
@@ -112,7 +119,7 @@ res+=(BreitWigner(v,Ecm[i])-sigma[i])*(BreitWigner(v,Ecm[i])-sigma[i])/err[i]/er
 	}
 
 	nsteps = qnewton(deviation,paramsc,tol);
-	minimum_print("HIGGS BOSON FIT",params,paramsc,nsteps,tol,deviation(paramsc));
+	minimum_print("HIGGS BOSON FIT\n             : mass width amplitude",params,paramsc,nsteps,tol,deviation(paramsc));
 
 	//Make index for pypxlot:
 	printf("\n\n");
@@ -132,10 +139,44 @@ res+=(BreitWigner(v,Ecm[i])-sigma[i])*(BreitWigner(v,Ecm[i])-sigma[i])/err[i]/er
 	
 	printf("The starting simplex is:\n");
 	print_simplex(simplex);
-	downhill_simplex(F,simplex,0.001);
+	downhill_simplex(F,simplex,0.001,x);
 	printf("and the final simplex is:\n");
 	print_simplex(simplex);
-	printf("indicating that the minimum is at the null-vector.\n");
+	printf("indicating that the minimum is at\n");
+	print_vector(x);
 
+	printf("\nThe simplex algorithm will now be used on the Rosenbrock function:\n");
+	gsl_matrix_set(simplex,0,0,1);
+	gsl_matrix_set(simplex,1,0,1);
+	gsl_matrix_set(simplex,0,1,0);
+	gsl_matrix_set(simplex,1,1,2);
+	gsl_matrix_set(simplex,0,2,2);
+	gsl_matrix_set(simplex,1,2,2);
+	
+	printf("The starting simplex is:\n");
+	print_simplex(simplex);
+	downhill_simplex(Rosenbrock,simplex,0.001,x);
+	printf("and the final simplex is:\n");
+	print_simplex(simplex);
+	printf("indicating that the minimum is at\n");
+	print_vector(x);
+
+	
+	printf("\nThe simplex algorithm will now be used on the Himmelblau function:\n");
+	gsl_matrix_set(simplex,0,0,1);
+	gsl_matrix_set(simplex,1,0,1);
+	gsl_matrix_set(simplex,0,1,0);
+	gsl_matrix_set(simplex,1,1,2);
+	gsl_matrix_set(simplex,0,2,2);
+	gsl_matrix_set(simplex,1,2,2);
+	
+	printf("The starting simplex is:\n");
+	print_simplex(simplex);
+	downhill_simplex(Himmelblau,simplex,0.001,x);
+	printf("and the final simplex is:\n");
+	print_simplex(simplex);
+	printf("indicating that the minimum is at\n");
+	print_vector(x);
+	
 	return 0;
 }
