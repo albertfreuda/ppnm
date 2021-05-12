@@ -25,7 +25,7 @@ int main(){
 	printf("1st part of exercise B: Comparison between number of evaluations\n");
 printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
 	Q = clenshaw_curtis(h,0,1,abstol,reltol,&n_evals);
-printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times\n",Q,n_evals);
+printf("Integral on (0,1) of 1/sqrt(x)=%g and integrand was evaluated %i times using the Clenshaw-Curtis transformation.\n",Q,n_evals);
 	printf("We see that the Clenshaw-Curtis transformation reduces the number of evaluations.\n");
 	printf("To further investigate this, see figure out.evaluations.png\n");
 	int calls;
@@ -73,6 +73,7 @@ gsl_integration_qags(&pi_gsl,0,1,abstol,reltol,size,workspace,&Q_gsl,&err_gsl);
 		abstol/=10;
 	}
 	printf("\n\n");//index for pyxplot INDEX 4
+	printf("Here we print the value of the integral using first the ordinary quadratures, then Clenshaw-Curtis and lastly GSL:\n");
 	printf("%.25g %.25g %.25g\n",Q,Q_CC,Q_gsl);
 	printf("\n\n");//index for pyxplot INDEX 5
 

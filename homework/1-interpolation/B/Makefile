@@ -5,7 +5,7 @@ plot.qinterp.png: out.qinterp.txt Makefile
 	echo '\
 	set terminal png;\
 	set output "$@";\
-	set key bottom left;\
+	set key outside;\
 	set tics out;\
 	set xlabel "$$x$$";\
 	set ylabel "$$y$$";\

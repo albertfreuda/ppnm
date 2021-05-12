@@ -81,8 +81,8 @@ int main(){
 	int nsteps = qnewton(F,xc,tol);	
 	minimum_print("EUCLIDIAN NORM FUNCTION",x,xc,nsteps,tol,F(xc));
 
-	gsl_vector_set(x,0,3);
-	gsl_vector_set(x,1,3);
+	gsl_vector_set(x,0,-5);
+	gsl_vector_set(x,1,18);
 	gsl_vector_memcpy(xc,x);
 
 	nsteps = qnewton(Rosenbrock,xc,tol);	
@@ -104,9 +104,9 @@ int main(){
 	//Parameter vector and initial guess:
 	gsl_vector * params  = gsl_vector_alloc(3);
 	gsl_vector * paramsc = gsl_vector_alloc(3);
-	gsl_vector_set(params,0,126);
-	gsl_vector_set(params,1,4);
-	gsl_vector_set(params,2,20);
+	gsl_vector_set(params,0,125);
+	gsl_vector_set(params,1,1);
+	gsl_vector_set(params,2,1);
 
 	gsl_vector_memcpy(paramsc,params);
 

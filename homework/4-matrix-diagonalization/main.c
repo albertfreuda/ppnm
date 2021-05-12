@@ -57,7 +57,7 @@ int main(){
 	gsl_blas_dgemm(CblasNoTrans,CblasNoTrans,1,V,I,0,A);
 	print_matrix(A);
 
-	printf("Hooray for Captain Spaulding! It works!");
+	printf("Hooray for Captain Spaulding! It works!\n");
 
 	gsl_matrix_free(A);
 	gsl_matrix_free(Acp);

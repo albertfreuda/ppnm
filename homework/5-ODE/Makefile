@@ -21,6 +21,8 @@ out.SIR.png: out.txt Makefile
 	set terminal png;\
 	set output "$@";\
 	set title "Solution to the SIR model";\
+	set xlabel "Days";\
+	set ylabel "People";\
 	plot \
 	"$<" index 1 using 1:2 with linespoints title "Suscpetible"\
 	,"$<" index 1 using 1:3 with linespoints title "Infected"\

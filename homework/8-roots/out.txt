@@ -21,3 +21,4 @@ we may use a smaller rmax.
 Search for energy minimum started at epsilon = -2
 Energy of s-wave is: -0.500244
 after calling the function 25 times.
+For a plot of the energy vs. the value of rmax see out.better_boundary.png

@@ -36,7 +36,9 @@ int main(int argc,char** argv){
 			gsl_matrix_set(A,i,k,100*(double)rand()/RAND_MAX);
 		}
 	}
+	//Solve system using your own routine
 	GS_decomp(A,R);
+
 
 	gsl_matrix_free(A);gsl_matrix_free(R);
 return 0;

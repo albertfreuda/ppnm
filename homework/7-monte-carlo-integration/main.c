@@ -22,15 +22,18 @@ double horrible_function(int dim, double * x){
 }
 
 int main(){
-	int runs = 5;
+	int runs = 4;
 	int N = 1e4;
 	double a[3] = {0,0,0}, b[3] = {M_PI,M_PI,M_PI},err_p,err_ld;
 	double tru_val = 1.3932039296768591842462603255;
+	double res,res_low_disc;
 	for (int n=0;n<runs;n++){
-	double res  = pmc_int(horrible_function,3,a,b,&err_p,N);
-	double res_low_disc  = ldmc_int(horrible_function,3,a,b,&err_ld,N);
+	res  = pmc_int(horrible_function,3,a,b,&err_p,N);
+	res_low_disc  = ldmc_int(horrible_function,3,a,b,&err_ld,N);
 	printf("%i %g %g\n",N,err_p,err_ld);
 	N *=10;
 	}
+	printf("\n\nThe value of the very singular integral is: %.25g\n",res);
+	printf("When divided by the true value we get: %.25g\n",res/tru_val);
 	return 0;
 }

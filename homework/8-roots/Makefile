@@ -45,3 +45,6 @@ main: main.c newton.c runge_kutta.c linsolve.c
 
 partC: partC.c newton.c runge_kutta.c linsolve.c
 
+.PHONEY:clean
+clean: 
+	$(RM) main partC out*

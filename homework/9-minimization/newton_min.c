@@ -33,10 +33,10 @@ void ngradient(double F(gsl_vector * x),
 		double dx,xi = gsl_vector_get(x,i);
 		//Since F might not be normalized
 		//we correct the step-size accordingly:
-		if(fabs(xi)<sqrt(delx)) dx = delx;
+		if(fabs(xi)<delx) dx = delx;
 		else dx = fabs(xi)*delx;	
 		//Move delta x in ith direction:
-		gsl_vector_set(x,i,xi+delx);
+		gsl_vector_set(x,i,xi+dx);
 		//Evaluate at new x:
 		double f_of_xpdx = F(x);
 		//Calculate gradient:
@@ -74,7 +74,7 @@ gsl_blas_dgemv(CblasNoTrans,-1,B,gradient,0,deltax);//dx = -B*gradF(x)
 
 	//Now we perform linesearch
 //Set lambda=1 to begin:
-double lambda = 1,lambda_min = 0.001;
+double lambda = 1,lambda_min = DBL_EPSILON;
 gsl_vector_memcpy(z,x);//Store copy of point
 gsl_vector_add(z,deltax);//Add step to copy
 double fz = F(z),fx = F(x);//calculate function at old and new point
@@ -84,7 +84,7 @@ gsl_blas_ddot(deltax,gradient,&sTg);//Caculate important sTg
 //-----------------------------------------------------------
 //printf("Before linesearch fx=%g and fz=%g\n",fx,fz);
 
-while(fx+0.01*sTg<fz){
+while(fx+0.01*sTg<=fz){
 	//If we reach lambda_min, reset hessian to identity
 	if(lambda<lambda_min) {
 	//	printf("Lambda=%g, and hessian is reset.\n",lambda);
@@ -118,11 +118,15 @@ if(gsl_blas_dnrm2(z)<tol){
 gsl_vector_sub(z,gradient);//z<-grad(x+dx)-grad(x) (z=y in note)
 gsl_vector_memcpy(u,deltax);//copy deltax to u
 gsl_blas_dgemv(CblasNoTrans,-1,B,z,1,u);//u <- -B*y+deltax
-double sTy;
+double sTy,uTy;
 gsl_blas_ddot(deltax,z,&sTy);//Calculate scaling of u
 //If scaling is not outrageous, update inverse hessian. Else, leave it
 if(fabs(sTy)>1e-6){
+	gsl_blas_ddot(u,z,&uTy);//Calculate scaling of u
+	double gamma=uTy/2/sTy;
+	gsl_blas_daxpy(-gamma,deltax,u);
 	gsl_blas_dger(1./sTy,u,deltax,B);//B <- B + u*sT/(sT*y)
+	gsl_blas_dger(1./sTy,deltax,u,B);//B <- B + u*sT/(sT*y)
 }
 //---------------------------------------------------------
 //else printf("Ouch, the update is quite big - so we don't apply it\n");

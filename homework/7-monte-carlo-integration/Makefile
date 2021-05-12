@@ -15,11 +15,15 @@ out.mc_comparison.png: out.txt Makefile
 	set logscale y;\
 	set title "Error estimates from Monte Carlo Integration";\
 	plot \
-	"$<" using 1:2 with linespoints title "Plain Monte Carlo"\
-	,"$<" using 1:3 with linespoints title "Low Discrepancy Monte Carlo"\
+	"$<" index 0 using 1:2 with linespoints title "Plain Monte Carlo"\
+	,"$<" index 0 using 1:3 with linespoints title "Low Discrepancy Monte Carlo"\
 	' | pyxplot
 
 out.txt: main
 	./$< > $@
 
 main: main.c pmc_int.c halton_corput.c
+
+.PHONEY:clean
+clean:
+	$(RM) main out*

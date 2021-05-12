@@ -16,7 +16,7 @@ plot.cinterp.png: out.cinterp.txt Makefile
 	set ylabel "$$y$$";\
 	set title "Interpolation";\
 	plot \
-	"$<" index 0 using 1:2 with line title "Quadratic interpolation"\
+	"$<" index 0 using 1:2 with line title "Cubic interpolation"\
 	,"$<" index 0 using 1:5 with line title "Real function $$y=e^{-x^2}$$"\
 	,"$<" index 1 using 1:2 with line title "Cubic interpolation from GSL"\
 	,"$<" index 2 using 1:2 with points title "Data points"\
@@ -59,4 +59,4 @@ main: main.c cinterp.c
 
 .PHONEY:clean
 clean:
-	$(RM) main out*
+	$(RM) main out* plot*

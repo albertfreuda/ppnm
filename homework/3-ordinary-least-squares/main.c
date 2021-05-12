@@ -8,6 +8,7 @@ void GS_decomp(gsl_matrix* A, gsl_matrix* R);
 double linfun(int i, double x){
 	if(i==0) return 1;
 	if(i==1) return x;
+	else return 0;
 }
 
 void GS_solve(gsl_matrix* A, gsl_matrix* R,gsl_vector* b,gsl_vector* x);
@@ -50,8 +51,12 @@ int main(){
 	printf("\n\n");
 	//Then we perform the fit
 	ls_fit(x,y,linfun,sigma,c,S);
+	//Print out the coefficients of the fit:
+	printf("The coefficients of the fit are:\n");
 	printf("%g %g\n",gsl_vector_get(c,0),gsl_vector_get(c,1));
 	printf("\n\n");
+	//Print out the uncertainties of the parameters from the cov. matrix:
+	printf("The sqrt of the diagonal of the covariance matrix is:\n");
 	printf("%g %g\n",sqrt(gsl_matrix_get(S,0,0)),sqrt(gsl_matrix_get(S,1,1)));
 	double sigmat = sqrt(gsl_matrix_get(S,1,1))*log(2)/(gsl_vector_get(c,1)*gsl_vector_get(c,1));
 	printf("In total, the half life is calculated to be (%g +- %g) days.\nThe real number is 3.6 days.\n",-log(2)/gsl_vector_get(c,1),sigmat);

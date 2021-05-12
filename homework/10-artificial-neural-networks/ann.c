@@ -51,19 +51,19 @@ void ANN_learn(ANN* network,
 	}
 
 //	printf("The value of the cost function was: %g\n",cost(p));
-	int N = network->n;	
+	/*int N = network->n;	
 	gsl_matrix * simplex = gsl_matrix_alloc(3*N,3*N+1);
 	for(int i=0;i<3*N+1;i++){
 		for(int k=0;k<N;k++){
-		gsl_matrix_set(simplex,3*k+0,i,0);
+		gsl_matrix_set(simplex,3*k+0,i,k);
 		gsl_matrix_set(simplex,3*k+1,i,1);
 		gsl_matrix_set(simplex,3*k+2,i,0.5);
 		}
-	}
+	}*/
 	//Minimize the cost function
 	double tolerance = 0.001;
-	//qnewton(cost,p,tolerance);
-	downhill_simplex(cost,simplex,tolerance,p);
+	qnewton(cost,p,tolerance);
+	//downhill_simplex(cost,simplex,tolerance,p);
 
 //	printf("The value of the cost function is: %g\n",cost(p));
 
@@ -71,4 +71,30 @@ void ANN_learn(ANN* network,
 	gsl_vector_memcpy(network->params,p);
 	//and free the temporary vector p
 	gsl_vector_free(p);
+}
+
+double ANN_eval_int(ANN* network,double F(double x),double x){
+	//This function takes in an ANN and a number x.
+	//It also takes F - the integral of the activation function
+	double sum = 0;
+	for(int i=0;i<network->n;i++){
+		double a = gsl_vector_get(network->params,3*i+0);
+		double b = gsl_vector_get(network->params,3*i+1);
+		double w = gsl_vector_get(network->params,3*i+2);
+		sum+=w*b*F((x-a)/b);	
+	}
+	return sum;
+}
+
+double ANN_eval_deriv(ANN* network,double fp(double x),double x){
+	//This function takes in an ANN and a number x.
+	//It also takes fp - the derivative of the activation function
+	double sum = 0;
+	for(int i=0;i<network->n;i++){
+		double a = gsl_vector_get(network->params,3*i+0);
+		double b = gsl_vector_get(network->params,3*i+1);
+		double w = gsl_vector_get(network->params,3*i+2);
+		sum+=w*fp((x-a)/b)/b;	
+	}
+	return sum;
 }

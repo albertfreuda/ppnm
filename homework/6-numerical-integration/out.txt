@@ -1,6 +1,6 @@
 1st part of exercise B: Comparison between number of evaluations
 Integral on (0,1) of 1/sqrt(x)=1.99952 and integrand was evaluated 4292 times
-Integral on (0,1) of 1/sqrt(x)=1.99987 and integrand was evaluated 8 times
+Integral on (0,1) of 1/sqrt(x)=1.99987 and integrand was evaluated 8 times using the Clenshaw-Curtis transformation.
 We see that the Clenshaw-Curtis transformation reduces the number of evaluations.
 To further investigate this, see figure out.evaluations.png
 Now comes some data for plotting the figure mentioned above
@@ -44,6 +44,7 @@ Now comes some data for plotting the figure mentioned above
 1e-13 315
 
 
+Here we print the value of the integral using first the ordinary quadratures, then Clenshaw-Curtis and lastly GSL:
 3.141592653589793115997963 3.141592653589793115997963 3.141592653589792671908754
 
 

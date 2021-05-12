@@ -156,6 +156,7 @@ int main(){
 	
 	printf("Energy of s-wave is: %g\n",gsl_vector_get(y,0));
 	printf("after calling the function %i times.\n",ncalls);
+	printf("For a plot of the energy vs. the value of rmax see out.better_boundary.png\n");
 	
 	gsl_vector_free(x);
 	gsl_vector_free(y);

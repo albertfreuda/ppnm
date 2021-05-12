@@ -1,4 +1,4 @@
-CFLAGS = -O1 -WDiagonalize the matrix using your Jacobi routine, all -std=gnu11
+CFLAGS = -O1 -Wall -std=gnu11
 CFLAGS += $(shell gsl-config --cflags)
 LDLIBS = -lm 
 LDLIBS += $(shell gsl-config --libs)
