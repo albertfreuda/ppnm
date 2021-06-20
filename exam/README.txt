@@ -1,9 +1,12 @@
 ----------------------------------INTRO--------------------------------------
-Hello, and welcome to my exam project. I have implemented the
-Cholesky-Banachiewicz algorithm, for performing a Cholesky decomposition 
-of a symmetric positive definite real matrix A into LL', where L is a 
-lower triangular matrix. The algorithm does so 'in place' to save memory. 
-The signature is:
+Hello, and welcome to my exam project. My student number ends with 95, so
+
+95 mod 22 = 7
+
+meaning that I have implemented the Cholesky-Banachiewicz algorithm, 
+for performing a Cholesky decomposition of a symmetric positive definite 
+real matrix A into LL', where L is a lower triangular matrix. The algorithm 
+does so 'in place' to save memory. The signature is:
 
 void cholesky_decomp(gsl_matrix * A)
 
