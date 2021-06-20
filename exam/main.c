@@ -41,7 +41,7 @@ printf("It performs the decomposition 'in-place'.\n\n");
 	gsl_vector * x = gsl_vector_alloc(3);
 
 	for(int i = 0; i < b->size; i++){
-		gsl_vector_set(b,i,-i+1);
+		gsl_vector_set(b,i,i+1);
 	}
 
 	lineq_print(A,b);
@@ -57,7 +57,19 @@ printf("It performs the decomposition 'in-place'.\n\n");
 	printf("while the product Ax (that should be equal to %g,%g,%g) is:\n",gsl_vector_get(b,0),gsl_vector_get(b,1),gsl_vector_get(b,2));
 	vector_print(b);
 
+	printf("I also inverted the matrix:\n");
+	gsl_matrix_memcpy(T,A);
+	cholesky_inverse(T,L);
 
+	matrix_print(L);
+
+	printf("To test whether this worked as intented, I calculate A*A^(-1):\n");
+
+	gsl_blas_dgemm(CblasNoTrans,CblasTrans,1,A,L,0,T);
+
+	matrix_print(T);
+
+	printf("This is the identity, indicating that everything worked as intented.\n");
 
 	gsl_matrix_free(A);
 	gsl_matrix_free(L);

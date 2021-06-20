@@ -11,7 +11,11 @@ void matrix_print(gsl_matrix * M){
 	int m=M->size2;
 	for(int i=0;i<n;i++){
 		for(int j=0;j<m;j++){
+		if(fabs(gsl_matrix_get(M,i,j))>1e-12){
 		printf("%8g ",gsl_matrix_get(M,i,j));
+		} else {
+		printf("%8i ",0);
+		}
 		}
 		printf("\n");
 	}
@@ -146,4 +150,21 @@ void cholesky_linsolve(gsl_matrix * A, gsl_vector * b, gsl_vector * x){
 	}
 	//Then x contains the solution to L'x=y
 	//where y is solution to Ly=b, so that Ax = LL'x = b
+}
+
+void cholesky_inverse(gsl_matrix * A, gsl_matrix * B){
+	//To find inverse, solve Ax_i = e_i, then {x1,x2,..} is inverse of A
+	gsl_vector * e = gsl_vector_alloc(A->size1);
+	gsl_vector * x = gsl_vector_alloc(A->size1);
+	gsl_matrix * L = gsl_matrix_alloc(A->size1,A->size2);
+	for(int i=0;i<A->size1;i++){
+		gsl_vector_set(e,i,1);
+		gsl_matrix_memcpy(L,A);
+		cholesky_linsolve(L,e,x);
+		gsl_matrix_set_col(B,i,x);
+		gsl_vector_set_zero(e);
+	}
+	gsl_vector_free(e);
+	gsl_vector_free(x);
+	gsl_matrix_free(L);
 }

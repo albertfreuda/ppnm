@@ -18,3 +18,5 @@ void rand_SPD(gsl_matrix * SPD);
 double cholesky_det(gsl_matrix * A);
 
 void cholesky_linsolve(gsl_matrix * A, gsl_vector * b, gsl_vector * x);
+
+void cholesky_inverse(gsl_matrix * A, gsl_matrix * B);
