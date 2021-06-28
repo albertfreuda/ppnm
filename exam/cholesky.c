@@ -1,5 +1,7 @@
 #include"cholesky_header.h"
 
+//Printing functions have been written, mainly used for output
+//(and while debugging)
 void vector_print(gsl_vector * v){
 	for(int i=0;i<v->size;i++){
 		printf("%8g\n",gsl_vector_get(v,i));
@@ -60,6 +62,7 @@ void cholesky_decomp(gsl_matrix * A){
 					gsl_matrix_set(A,i,r,0);
 				}
 			}
+			//otherwise matrix elements are calculated like this:
 			else{
 				double Aij = gsl_matrix_get(A,i,j);
 				double Ljj = gsl_matrix_get(A,j,j);
@@ -144,6 +147,7 @@ void cholesky_linsolve(gsl_matrix * A, gsl_vector * b, gsl_vector * x){
 	for(int i=n-1;i>=0;i--){
 		double s = gsl_vector_get(b,i);
 		for(int j=i+1;j<n;j++){
+		//Note that indices on A are changed due to the transpose
 			s-=gsl_matrix_get(A,j,i)*gsl_vector_get(x,j);
 		}
 		gsl_vector_set(x,i,s/gsl_matrix_get(A,i,i));

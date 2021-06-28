@@ -73,4 +73,9 @@ must obey
 
 AB = I
 
-I solve the linear system in (1) by using the cholesky_linsolve function. 
+I solve the linear system in (1) by using the cholesky_linsolve function.
+
+---------------------------------EVALUATION-----------------------------------
+To my knowledge, the algorithm has been correctly implemented. All extra
+assignments have been solved as well. My self-evaluation of the project 
+is 9.5 out of 10. 
